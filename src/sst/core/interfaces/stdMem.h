@@ -364,7 +364,10 @@ public:
             data(respData),
             iPtr(instPtr),
             tid(tid)
-        {}
+        {
+            // Default mask is all true for read responses
+            mask.resize(size, true);
+        }
 
         ReadResp(Read* readEv, std::vector<uint8_t> respData) :
             Request(readEv->getID(), readEv->getAllFlags()),
@@ -374,7 +377,9 @@ public:
             data(respData),
             iPtr(readEv->iPtr),
             tid(readEv->tid)
-        {}
+        {
+            mask.resize(size, true);
+        }
 
         virtual ~ReadResp() {}
 
@@ -405,6 +410,7 @@ public:
         Addr                 vAddr; /* Virtual address */
         uint64_t             size;  /* Number of bytes to read */
         std::vector<uint8_t> data;  /* Read data */
+        std::vector<bool>    mask;  /* Mask for the read data */
         Addr                 iPtr;  /* Instruction pointer - optional metadata */
         uint32_t             tid;   /* Thread ID */
 
@@ -444,6 +450,23 @@ public:
             posted(posted),
             iPtr(instPtr),
             tid(tid)
+        {
+            // Default mask is all true
+            mask.resize(size, true);
+        }
+
+        Write(
+            Addr physAddr, uint64_t size, std::vector<uint8_t> wData, std::vector<bool> mask, bool posted = false, flags_t flags = 0,
+            Addr virtAddr = 0, Addr instPtr = 0, uint32_t tid = 0) :
+            Request(flags),
+            pAddr(physAddr),
+            vAddr(virtAddr),
+            size(size),
+            data(wData),
+            mask(mask),
+            posted(posted),
+            iPtr(instPtr),
+            tid(tid)
         {}
         /* Destructor */
         virtual ~Write() {}
@@ -476,6 +499,7 @@ public:
         Addr                 vAddr;  /* Virtual address */
         uint64_t             size;   /* Number of bytes to write */
         std::vector<uint8_t> data;   /* Written data */
+        std::vector<bool>    mask;   /* Mask for the written data */
         bool                 posted; /* Whether write is posted (requires no response) */
         Addr                 iPtr;   /* Instruction pointer - optional metadata */
         uint32_t             tid;    /* Thread ID */
@@ -849,6 +873,22 @@ public:
             posted(posted),
             iPtr(instPtr),
             tid(tid)
+        {
+            mask.resize(size, true);
+        }
+        
+        WriteUnlock(
+            Addr physAddr, uint64_t size, std::vector<uint8_t> wData, std::vector<bool> mask, bool posted = false, flags_t flags = 0,
+            Addr virtAddr = 0, Addr instPtr = 0, uint32_t tid = 0) :
+            Request(flags),
+            pAddr(physAddr),
+            vAddr(virtAddr),
+            size(size),
+            data(wData),
+            mask(mask),
+            posted(posted),
+            iPtr(instPtr),
+            tid(tid)
         {}
 
         virtual ~WriteUnlock() {}
@@ -881,6 +921,7 @@ public:
         Addr                 vAddr;  /* Virtual address */
         uint64_t             size;   /* Number of bytes to write */
         std::vector<uint8_t> data;   /* Written data */
+        std::vector<bool>     mask;   /* Mask for the written data */
         bool                 posted; /* Whether write is posted (requires no response) */
         Addr                 iPtr;   /* Instruction pointer - optional metadata */
         uint32_t             tid;    /* Thread ID */
@@ -991,6 +1032,21 @@ public:
             data(wData),
             iPtr(instPtr),
             tid(tid)
+        {
+            mask.resize(size, true);
+        }
+
+        StoreConditional(
+            Addr physAddr, uint64_t size, std::vector<uint8_t> wData, std::vector<bool> mask, flags_t flags = 0, Addr virtAddr = 0,
+            Addr instPtr = 0, uint32_t tid = 0) :
+            Request(flags),
+            pAddr(physAddr),
+            vAddr(virtAddr),
+            size(size),
+            data(wData),
+            mask(mask),
+            iPtr(instPtr),
+            tid(tid)
         {}
 
         virtual ~StoreConditional() {}
@@ -1024,6 +1080,7 @@ public:
         Addr                 vAddr; /* Virtual address */
         uint64_t             size;  /* Number of bytes to write */
         std::vector<uint8_t> data;  /* Written data */
+        std::vector<bool>    mask;  /* Mask for the written data */
         Addr                 iPtr;  /* Instruction pointer - optional metadata */
         uint32_t             tid;   /* Thread ID */
 
