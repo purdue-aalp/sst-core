@@ -238,6 +238,11 @@ private:
      */
     size_t refCount_ = 1;
 
+protected:
+    // Static empty variable map for use by getVariables() in fundamental types
+    // Moved from function-local static to class static to fix shared library linking
+    static ObjectMultimap emptyVars;
+
 public:
     /**
        Default constructor primarily used for the "top" object in the hierarchy
@@ -310,17 +315,7 @@ public:
        ObjectMap's child variables. Fundamental types will return the
        same empty map.
      */
-    virtual const ObjectMultimap& getVariables() const
-    {
-        /**
-           Static empty variable map for use by versions that don't have
-           variables (i.e. are fundamentals or classes treated as
-           fundamentals.  This is needed because getVariables() returns a
-           reference to the map.
-        */
-        static ObjectMultimap emptyVars;
-        return emptyVars;
-    }
+    virtual const ObjectMultimap& getVariables() const;
 
     /**
        Increment the reference counter for this ObjectMap. When
@@ -493,7 +488,7 @@ public:
        ObjectMaps, rather decRefCount() should be called when the
        object is no longer needed.
      */
-    virtual ~ObjectMap() = default;
+    virtual ~ObjectMap();
 
     /**
        Disallow copying and assignment

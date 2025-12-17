@@ -31,6 +31,7 @@ class Config;
 
 class SSTModelDescription;
 class UnitAlgebra;
+class SST_Wrapper;
 
 namespace StandardConfigParsers {
 
@@ -56,6 +57,7 @@ public:
     friend int ::main(int argc, char** argv);
     friend class SSTModelDescription;
     friend class Simulation_impl;
+    friend class SST_Wrapper;
 
     /**
        Default constructor.

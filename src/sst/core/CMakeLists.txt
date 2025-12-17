@@ -23,6 +23,7 @@ add_subdirectory(shared)
 add_subdirectory(sync)
 add_subdirectory(testingframework)
 add_subdirectory(testElements)
+add_subdirectory(wrapper)
 
 # -- Required for header installation
 add_subdirectory(cfgoutput)
@@ -104,6 +105,7 @@ add_library(
   statapi/statoutputcsv.cc
   statapi/statoutputjson.cc
   statapi/statbase.cc
+  wrapper/wrapper.cc
   stringize.cc
   cputimer.cc
   iouse.cc)

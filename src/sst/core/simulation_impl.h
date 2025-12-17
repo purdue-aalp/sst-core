@@ -389,6 +389,7 @@ public:
     friend class Link;
     friend class Action;
     friend class Output;
+    friend class SST_Wrapper;
     // To enable main to set up globals
     friend int ::main(int argc, char** argv);
 

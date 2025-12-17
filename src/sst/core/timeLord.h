@@ -32,6 +32,7 @@ class Simulation_impl;
 class TimeConverter;
 class UnitAlgebra;
 class BaseComponent;
+class SST_Wrapper;
 
 /**
     Class for creating and managing TimeConverter objects
@@ -85,6 +86,7 @@ private:
     friend class SST::BaseComponent;
 
     friend int ::main(int argc, char** argv);
+    friend class SST::SST_Wrapper;
 
     void init(const std::string& timeBaseString);
 

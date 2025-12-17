@@ -159,6 +159,7 @@ nobase_dist_sst_HEADERS = \
 	statapi/statnull.h \
 	threadsafe.h \
 	cputimer.h \
+	wrapper/wrapper.hh \
 	warnmacros.h
 
 
@@ -348,6 +349,7 @@ include sync/Makefile.inc
 include util/Makefile.inc
 include testingframework/Makefile.inc
 include testElements/Makefile.inc
+include wrapper/Makefile.inc
 
 if !SST_ENABLE_PREVIEW_BUILD
 nobase_dist_sst_HEADERS += $(deprecated_nobase_dist_sst_headers)

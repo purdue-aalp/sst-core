@@ -40,6 +40,9 @@ extern int main(int argc, char** argv);
 
 namespace SST {
 
+// Forward declaration
+class SST_Wrapper;
+
 // MACROS TO HELP BUILD THE CALLING FUNCTIONS INFORMATION
 #define CALL_INFO __LINE__, __FILE__, __FUNCTION__
 
@@ -502,6 +505,7 @@ private:
     }
 
     friend int ::main(int argc, char** argv);
+    friend class SST::SST_Wrapper;
     static Output& setDefaultObject(const std::string& prefix, uint32_t verbose_level, uint32_t verbose_mask,
         output_location_t location, const std::string& localoutputfilename = "")
     {

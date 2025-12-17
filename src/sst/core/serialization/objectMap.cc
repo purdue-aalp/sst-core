@@ -19,6 +19,18 @@
 
 namespace SST::Core::Serialization {
 
+// Define the static member variable
+ObjectMultimap ObjectMap::emptyVars;
+
+// Define the destructor out-of-line to emit vtable and typeinfo
+ObjectMap::~ObjectMap() {}
+
+const ObjectMultimap&
+ObjectMap::getVariables() const
+{
+    return emptyVars;
+}
+
 std::string
 ObjectMap::getFullName() const
 {
